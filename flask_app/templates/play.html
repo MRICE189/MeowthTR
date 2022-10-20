@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Meowth? That's Right!</title>
+</head>
+<body>
+    <div class="container">
+        <div class="d-flex justify-content-end my-3 gap-3">
+            <a href="/logout" class="btn btn-danger w-25">Logout</a>
+            <a href="/scores" class="btn btn-primary w-25">Past Wins</a>
+        </div>
+        <img class="go-up rounded border border-5 border-primary" src="{{ url_for('static', filename='/../img/banner3.png') }}" alt="banner">
+        <div class="sprites-box bg-white d-flex flex-wrap border border-5 rounded border-primary">
+            {% for pokemon in all_pokemon %}
+                <div class="tooltip-wrap">
+                    <img class="box-sprite" src="{{pokemon.poke_sprite}}" alt="{{pokemon.poke_name}}">
+                    <div class="tooltip-content">
+                        <ul>
+                            <li><b>{{pokemon.poke_name | capitalize}}</b></li>
+                            <li>{{pokemon.poke_type1 | capitalize}}</li>
+                            <li>{{pokemon.poke_type2 | capitalize}}</li>
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <table class="table table-primary table-striped table-sm align-middle">
+            <thead>
+                <tr>
+                    <th>Pokémon</th>
+                    <th>Sprite</th>
+                    <th>Gen</th>
+                    <th>Type1</th>
+                    <th>Type2</th>
+                    <th>Attack</th>
+                    <th>Sp. Att</th>
+                    <th>Height</th>
+                    <th>Weight</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for guess in comparisons %}
+                    {% if guess %}
+                        <tr>
+                            {{guess.comp_name | safe}}
+                            {{guess.poke_sprite | safe}}
+                            {{guess.comp_gen | safe}}
+                            {{guess.comp_type1 | safe}}
+                            {{guess.comp_type2 | safe}}
+                            {{guess.comp_att | safe}}
+                            {{guess.comp_satt | safe}}
+                            {{guess.comp_height | safe}}
+                            {{guess.comp_weight | safe}}
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                <tr id="guess1"></tr>
+                <tr id="guess2"></tr>
+                <tr id="guess3"></tr>
+                <tr id="guess4"></tr>
+                <tr id="guess5"></tr>
+                <tr id="guess6"></tr>
+                <tr id="guess7"></tr>
+                <tr id="guess8"></tr>
+            </tbody>
+        </table>
+        <div id="results" class="d-none rounded text-center d-flex align-items-center justify-content-center mb-3"></div>
+        <form action="/new_game" class="text-center"> 
+            <button id="play_again" class="d-none w-25 mb-3 btn btn-primary">Play again?</div>
+        </form>
+        <div class="d-flex flex-column align-items-center">
+            <form class="guess text-center">
+                <div class="wrapper"> 
+                    <div class="search-input"> 
+                        <input type="text" name="guess" placeholder="Pick a Pokémon!" autocomplete="off" class="form-control border-primary border border-5 text-center" id="search-bar"> 
+                        <div class="autocom-box">
+                        </div>
+                    </div>
+                </div> 
+                <input type="submit" value="Guess" class="btn btn-warning mt-2 w-100">
+            </form>
+            <div class="my-2">
+                <form action="/end">
+                <input type="submit" class="btn btn-danger" value="End Game"></button>
+                </form>
+            </div>
+            <div class="page-bottom"></div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='/../js/suggestions.js') }}"></script>
+    <script src="{{ url_for('static', filename='/../js/play.js') }}"></script>
+</body>
+</html>

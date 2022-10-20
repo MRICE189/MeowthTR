@@ -1,0 +1,1 @@
+SELECT * FROM meowth_thats_right_db.pokemons;
